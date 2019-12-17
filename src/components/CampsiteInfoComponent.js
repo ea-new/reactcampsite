@@ -31,8 +31,11 @@ class CommentForm extends Component {
         });
     }
     handleCommentSubmit(values){
+        this.toggleModal(); 
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text); 
         console.log("Current state is:" + JSON.stringify(values)); 
         alert("Current state is:" + JSON.stringify(values));
+
     }
 
 
@@ -84,13 +87,12 @@ class CommentForm extends Component {
                                      </Col>
                                 </Row>
 
-                                <Label htmlFor="author">Comment</Label>
+                                <Label htmlFor="text">Comment</Label>
                                 <Row className ="form-group">
                                     <Col className="group">
                                         <Control.textarea model =".text" id="text" name="text"
                                             placeholder="Please leave your comment"
                                             className ="form-control"
-                                        
                                         />
                                      </Col>
                                 </Row>
@@ -118,7 +120,7 @@ function RenderCampsite({ campsite }) {
     );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment,campsiteId }) {
     
     if (comments) {
         return (
@@ -136,7 +138,7 @@ function RenderComments({ comments }) {
                         </div>
                     );
                 })}
-               <CommentForm/>
+               <CommentForm campsiteId = {campsiteId} addComment = {addComment} />
             </div>
         );
     }
@@ -161,7 +163,11 @@ function CampsiteInfo(props) {
 
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments 
+                        comments={props.comments} 
+                        addComment ={props.addComment}
+                        campsiteId ={props.campsite.id} 
+                        />
                 </div>
             </div>
         );
