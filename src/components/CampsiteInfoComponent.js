@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import {Control,LocalForm,Errors} from 'react-redux-form'; 
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 
 const maxLength = len => val => !val || (val.length <= len);
@@ -113,7 +114,7 @@ function RenderCampsite({ campsite }) {
     return (
         <div className="col-md-5 m-1">
             <Card>
-                <CardImg top src={campsite.image} alt={campsite.name} />
+                <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardBody>
                     <CardText>{campsite.description}</CardText>
                 </CardBody>
@@ -122,7 +123,7 @@ function RenderCampsite({ campsite }) {
     );
 }
 
-function RenderComments({ comments, addComment,campsiteId }) {
+function RenderComments({comments, postComment, campsiteId}) {
     
     if (comments) {
         return (
@@ -140,7 +141,7 @@ function RenderComments({ comments, addComment,campsiteId }) {
                         </div>
                     );
                 })}
-               <CommentForm campsiteId = {campsiteId} addComment = {addComment} />
+               <CommentForm campsiteId={campsiteId} postComment={postComment} />
             </div>
         );
     }
@@ -189,6 +190,7 @@ function CampsiteInfo(props) {
                         comments={props.comments} 
                         addComment ={props.addComment}
                         campsiteId ={props.campsite.id} 
+                        postComment={props.postComment}
                         />
                 </div>
             </div>
